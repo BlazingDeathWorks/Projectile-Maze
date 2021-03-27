@@ -3,20 +3,15 @@ using System.Collections;
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))] [RequireComponent(typeof(Rigidbody2D))]
 public abstract class ProjectileGeneratorBase : MonoBehaviour
 {
-    public ProjectileGeneratorDataBase ProjectileGeneratorData { protected get; set; } = new ProjectileGeneratorData();
-    protected ProjectileBase InstantiatedProjectile { get; private set; } = null;
+    public ProjectileGeneratorDataBase ProjectileGeneratorData { protected get; set; } = null;
+    protected ProjectileBase InstantiatedProjectile { get; set; } = null;
 
-    public void ManualAwake()
-    {
-        InstantiatedProjectile = Instantiate(ProjectileGeneratorData.ProjectileObject, transform.position, Quaternion.identity);
-        InstantiatedProjectile.ProjectileGeneratorBase = this;
-        InstantiatedProjectile.transform.parent = transform;
-        InstantiatedProjectile?.gameObject.SetActive(false);
-    }
+    public abstract void ManualAwake();
 
-    protected abstract void EnableProjectile();
+    public abstract void EnableProjectile();
 
     public abstract void DestroyProjectile();
 }

@@ -10,10 +10,20 @@ public class GameWorldManager : MonoBehaviour
 
     private void Awake()
     {
+        SetEachCoreDataQuadrantDirections();
         CustomGrid<GameObject> grid = new CustomGrid<GameObject>(levelConfiguration.CustomGridData);
         gameWorldTextureColorScan = GetComponent<ITextureColorScan>();
         gameWorldTextureColorScan.SetLevelConfig(grid, levelConfiguration);
     }
+
+    private void SetEachCoreDataQuadrantDirections()
+    {
+        foreach (CoreData coreData in levelConfiguration.CoreData)
+        {
+            coreData.SetQuadrantDirections();
+        }
+    }
+
     private void Start()
     {
         gameWorldTextureColorScan.ScanTexture();

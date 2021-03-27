@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ProjectileGeneratorData : ProjectileGeneratorDataBase
 {
-    public ProjectileGeneratorData(DirectionBase dir = null, ProjectileBase projectileObject = null)
+    public ProjectileGeneratorData(DirectionBase dir, CoreData coreData)
     {
         Direction = dir;
-        ProjectileObject = projectileObject;
+        ProjectileObject = coreData.ProjectileObject;
+        ProjectileDamage = coreData.ProjectileDamage;
     }
 }

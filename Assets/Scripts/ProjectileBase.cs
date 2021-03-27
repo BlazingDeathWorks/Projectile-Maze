@@ -5,20 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))] [RequireComponent(typeof(BoxCollider2D))]
 public abstract class ProjectileBase : MonoBehaviour
 {
-    [SerializeField]
-    protected int damage = 1;
-    protected Rigidbody2D rb = null;
-    public ProjectileGeneratorBase ProjectileGeneratorBase { private get; set; } = null;
+    public ProjectileDataBase ProjectileDataBase { protected get; set; } = null;
+    public ProjectileGeneratorBase ProjectileGeneratorBase { protected get; set; } = null;
 
-    protected virtual void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-    }
+    public abstract void MoveProjectile(DirectionBase directionBase);
 
-    public virtual void MoveProjectile(DirectionBase directionBase)
-    {
-        rb.velocity = directionBase.Direction;
-    }
-
+    //For player collision
     protected abstract void OnTriggerEnter2D(Collider2D collision);
 }

@@ -14,9 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   generator: {fileID: -3274595098754710022, guid: 6925064b72ce78948ad6085bb26f63f8, type: 3}
   projectileObject: {fileID: 6941761512909194727, guid: 473a07b70e464354e8d2c262621ba5a0, type: 3}
-  projectileSpeed: 3
-  generatorPositions:
-  - {x: 3, y: 3}
-  - {x: -3, y: 3}
-  - {x: -3, y: -3}
-  - {x: 3, y: -3}
+  projectileSpeed: 15
+  projectileDamage: 2
+  projectileScaleLength: 0.85
+  generatorPos: {x: 3, y: 1}

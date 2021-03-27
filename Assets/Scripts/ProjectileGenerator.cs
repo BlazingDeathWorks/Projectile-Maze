@@ -4,7 +4,17 @@ using UnityEngine;
 
 public class ProjectileGenerator : ProjectileGeneratorBase
 {
-    protected override void EnableProjectile()
+    public override void ManualAwake()
+    {
+        InstantiatedProjectile = Instantiate(ProjectileGeneratorData.ProjectileObject, transform.position, Quaternion.identity);
+        InstantiatedProjectile.ProjectileGeneratorBase = this;
+        InstantiatedProjectile.transform.localScale = ProjectileGeneratorData.Direction.VectorScale;
+        InstantiatedProjectile.ProjectileDataBase = new ProjectileData(ProjectileGeneratorData);
+        InstantiatedProjectile.transform.parent = transform;
+        InstantiatedProjectile?.gameObject.SetActive(false);
+    }
+
+    public override void EnableProjectile()
     {
         if (!InstantiatedProjectile) return;
         InstantiatedProjectile.gameObject.SetActive(true);
@@ -14,8 +24,6 @@ public class ProjectileGenerator : ProjectileGeneratorBase
     public override void DestroyProjectile()
     {
         if (!InstantiatedProjectile) return;
-        InstantiatedProjectile.gameObject.SetActive(false);
         InstantiatedProjectile.transform.position = transform.position;
-        InstantiatedProjectile.gameObject.SetActive(true);
     }
 }
