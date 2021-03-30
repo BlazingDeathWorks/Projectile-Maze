@@ -15,11 +15,7 @@ public class KeyButton
     {
         get
         {
-            return IsPressed;
-        }
-        set
-        {
-            Input.GetKeyDown(keyCode);
+            return Input.GetKeyDown(keyCode);
         }
     }
 

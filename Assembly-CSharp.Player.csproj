@@ -68,15 +68,23 @@
     <Compile Include="Assets\Scripts\BaseCore.cs" />
     <Compile Include="Assets\Scripts\LeftDirection.cs" />
     <Compile Include="Assets\Scripts\CoreTotalGenerators.cs" />
+    <Compile Include="Assets\Scripts\ProjectileDataBase.cs" />
+    <Compile Include="Assets\Scripts\ProjectileData.cs" />
     <Compile Include="Assets\Scripts\ColorToObjectBase.cs" />
+    <Compile Include="Assets\Scripts\PlayerDamagable.cs" />
     <Compile Include="Assets\Scripts\ProjectileGeneratorDataBase.cs" />
+    <Compile Include="Assets\Scripts\HorizontalDirection.cs" />
     <Compile Include="Assets\Scripts\GameWorldManager.cs" />
+    <Compile Include="Assets\Scripts\IDamagable.cs" />
     <Compile Include="Assets\Scripts\ProjectileGeneratorData.cs" />
     <Compile Include="Assets\Scripts\Core.cs" />
     <Compile Include="Assets\Scripts\ProjectileGeneratorBase.cs" />
     <Compile Include="Assets\Scripts\HealingCoreData.cs" />
     <Compile Include="Assets\Scripts\CustomGrid.cs" />
     <Compile Include="Assets\Scripts\RightDirection.cs" />
+    <Compile Include="Assets\Scripts\KeyButton.cs" />
+    <Compile Include="Assets\Scripts\VerticalDirection.cs" />
+    <Compile Include="Assets\Scripts\InputManager.cs" />
     <Compile Include="Assets\Scripts\GameWorldColorToPrefab.cs" />
     <Compile Include="Assets\Scripts\ITextureColorScan.cs" />
     <Compile Include="Assets\Scripts\DownDirection.cs" />
@@ -84,14 +92,13 @@
     <Compile Include="Assets\Scripts\UpDirection.cs" />
     <Compile Include="Assets\Scripts\LevelConfiguration.cs" />
     <Compile Include="Assets\Scripts\NormalCoreData.cs" />
-    <Compile Include="Assets\Scripts\ProjectileDataBase.cs" />
-    <Compile Include="Assets\Scripts\ProjectileData.cs" />
-    <Compile Include="Assets\Scripts\VerticalDirection.cs" />
-    <Compile Include="Assets\Scripts\HorizontalDirection.cs" />
-    <Compile Include="Assets\Scripts\IDamagable.cs" />
-    <Compile Include="Assets\Scripts\PlayerDamagable.cs" />
-    <Compile Include="Assets\Scripts\InputManager.cs" />
-    <Compile Include="Assets\Scripts\KeyButton.cs" />
+    <Compile Include="Assets\Scripts\StateMachine.cs" />
+    <Compile Include="Assets\Scripts\PlayerStateMachine.cs" />
+    <Compile Include="Assets\Scripts\PlayerState.cs" />
+    <Compile Include="Assets\Scripts\Entity.cs" />
+    <Compile Include="Assets\Scripts\PlayerEntity.cs" />
+    <Compile Include="Assets\Scripts\PlayerIdleState.cs" />
+    <Compile Include="Assets\Scripts\State.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
