@@ -2,16 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
 public sealed class PlayerEntity : Entity
 {
-    public Animator Animator { get; private set; } = null;
-    public Transform MyTransform { get; private set; } = null;
-
-    protected override void Awake()
+    private void Start()
     {
-        base.Awake();
-        Animator = GetComponent<Animator>();
-        MyTransform = transform;
+        StateMachine = new PlayerStateMachine(new PlayerIdleState(this));
+    }
+
+    protected override void Update()
+    {
+        if (StateMachine.currentState == null) return;
+        base.Update();
+    }
+
+    protected override void FixedUpdate()
+    {
+        if (StateMachine.currentState == null) return;
+        base.FixedUpdate();
     }
 }

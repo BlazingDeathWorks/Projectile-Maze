@@ -99,6 +99,7 @@
     <Compile Include="Assets\Scripts\PlayerEntity.cs" />
     <Compile Include="Assets\Scripts\PlayerIdleState.cs" />
     <Compile Include="Assets\Scripts\State.cs" />
+    <Compile Include="Assets\Scripts\MovablePlayerState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
