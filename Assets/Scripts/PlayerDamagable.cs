@@ -9,11 +9,13 @@ public class PlayerDamagable : MonoBehaviour, IDamagable
     private static int maxHealth = 10;
     private int health = maxHealth;
     private SpriteRenderer sr = null;
+    private Rigidbody2D rb = null;
     public bool Invincible { get; set; } = false;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        rb = GetComponent<Rigidbody2D>();
     }
 
     public void TakeDamage(int damage)
@@ -30,6 +32,7 @@ public class PlayerDamagable : MonoBehaviour, IDamagable
         {
             if (deathParticle) Instantiate(deathParticle, transform.position, transform.rotation);
             if (sr != null) Destroy(sr);
+            if (rb != null) Destroy(rb);
         }
     }
 }
