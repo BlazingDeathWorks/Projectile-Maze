@@ -1,5 +1,6 @@
 /Temp
-/Library
+/[Ll]ibrary
+/[Ll]ogs
 /Obj
 /UnityGenerated
 /Build
