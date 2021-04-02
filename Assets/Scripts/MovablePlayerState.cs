@@ -61,7 +61,6 @@ public class MovablePlayerState : PlayerState
     {
         if (entity.rb == null)
         {
-            Debug.LogError("No rigidbody2d");
             return;
         }
         entity.Animator.SetBool("PlayerHorizontal", true);
@@ -73,7 +72,6 @@ public class MovablePlayerState : PlayerState
     {
         if (entity.rb == null)
         {
-            Debug.LogError("No rigidbody2d");
             return;
         }
         entity.Animator.SetBool("PlayerVertical", true);
