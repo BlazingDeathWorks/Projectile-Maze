@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class PlayerStateMachine : StateMachine
 {
-    public PlayerStateMachine(PlayerState defaultState)
-    {
-        currentState = defaultState;
-        currentState.Enter();
-    }
-
-    public override void ChangeState(State newState)
+    public override void ChangeState(PlayerState newState)
     {
         currentState.Exit();
         currentState = newState;

@@ -4,8 +4,12 @@ using UnityEngine;
 
 public abstract class PlayerState : State
 {
-    public PlayerState(Entity entity) : base(entity)
+    protected PlayerEntity entity = null;
+
+    public PlayerState(PlayerEntity entity)
     {
-        
+        this.entity = entity;
     }
+
+    
 }
