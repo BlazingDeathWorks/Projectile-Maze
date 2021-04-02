@@ -8,6 +8,7 @@ public class InputManager : MonoBehaviour
     public static InputManager instance = null;
     private KeyButton[] keyButtons;
 
+    #region Singleton
     private void Singleton()
     {
         if (!instance)
@@ -18,11 +19,18 @@ public class InputManager : MonoBehaviour
         }
         Destroy(gameObject);
     }
+    #endregion
 
+    #region InitializeKeyButtons
     private void InitializeKeyButtons()
     {
         keyButtons = new KeyButton[] { up, down, left, right };
+        up.KeyButtonsDisabled = new KeyButton[] { down, left, right };
+        down.KeyButtonsDisabled = new KeyButton[] { up, left, right };
+        left.KeyButtonsDisabled = new KeyButton[] { right, up, down };
+        right.KeyButtonsDisabled = new KeyButton[] { left, up, down };
     }
+    #endregion
 
     private void Awake()
     {

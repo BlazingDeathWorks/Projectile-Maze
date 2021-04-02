@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class State
 {
+    protected Entity entity = null;
+
+    public State(Entity entity)
+    {
+        this.entity = entity;
+    }
+
     public virtual void Enter()
     {
         
