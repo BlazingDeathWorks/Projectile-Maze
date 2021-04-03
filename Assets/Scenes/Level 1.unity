@@ -41709,3 +41709,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entitySpeed: 11.5
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 512
