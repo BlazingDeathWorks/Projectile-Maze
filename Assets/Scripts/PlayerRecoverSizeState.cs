@@ -2,25 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHorizontalMoveState : PlayerMoveState
+public abstract class PlayerRecoverSizeState : MovablePlayerState
 {
-    protected override Vector2 MoveDirection { get => new Vector2(InputDirection * entity.EntitySpeed, 0); }
-    protected override string AnimatorBoolName { get => "PlayerHorizontal"; }
+    protected const string AnimatorBoolName = "PlayerSizeRecover";
 
-    public PlayerHorizontalMoveState(Entity entity) : base(entity)
+    public PlayerRecoverSizeState(Entity entity) : base(entity)
     {
 
     }
 
-
     public override void Enter()
     {
         base.Enter();
+        SetPlayerAnimation(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        SetPlayerAnimation(false);
     }
 
     public override void PhysicsUpdate()
@@ -38,8 +38,8 @@ public class PlayerHorizontalMoveState : PlayerMoveState
         base.TransitionCheck();
     }
 
-    protected override void InitializeInputDirection()
+    private void SetPlayerAnimation(bool value)
     {
-        InputDirection = Input.GetAxisRaw("Horizontal");
+        entity.Animator.SetBool(AnimatorBoolName, value);
     }
 }

@@ -2,16 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerHorizontalMoveState : PlayerMoveState
+public class PlayerHorizontalRecoverSizeState : PlayerRecoverSizeState
 {
-    protected override Vector2 MoveDirection { get => new Vector2(InputDirection * entity.EntitySpeed, 0); }
-    protected override string AnimatorBoolName { get => "PlayerHorizontal"; }
-
-    public PlayerHorizontalMoveState(Entity entity) : base(entity)
+    public PlayerHorizontalRecoverSizeState(Entity entity) : base(entity)
     {
 
     }
-
 
     public override void Enter()
     {
@@ -36,10 +32,5 @@ public class PlayerHorizontalMoveState : PlayerMoveState
     public override void TransitionCheck()
     {
         base.TransitionCheck();
-    }
-
-    protected override void InitializeInputDirection()
-    {
-        InputDirection = Input.GetAxisRaw("Horizontal");
     }
 }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerVerticalMoveState : PlayerMoveState
 {
     protected override Vector2 MoveDirection { get => new Vector2(0, InputDirection * entity.EntitySpeed); }
-    
+    protected override string AnimatorBoolName { get => "PlayerVertical"; }
+
     public PlayerVerticalMoveState(Entity entity) : base(entity)
     {
 
@@ -35,11 +36,6 @@ public class PlayerVerticalMoveState : PlayerMoveState
     public override void TransitionCheck()
     {
         base.TransitionCheck();
-    }
-
-    protected override void SetPlayerAnimationEnter()
-    {
-        entity.Animator.SetBool("PlayerVertical", true);
     }
 
     protected override void InitializeInputDirection()

@@ -103,6 +103,9 @@
     <Compile Include="Assets\Scripts\PlayerMoveState.cs" />
     <Compile Include="Assets\Scripts\PlayerHorizontalMoveState.cs" />
     <Compile Include="Assets\Scripts\PlayerVerticalMoveState.cs" />
+    <Compile Include="Assets\Scripts\PlayerRecoverSizeState.cs" />
+    <Compile Include="Assets\Scripts\PlayerHorizontalRecoverSizeState.cs" />
+    <Compile Include="Assets\Scripts\PlayerVerticalRecoverSizeState.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,11 @@ using UnityEngine;
 public abstract class PlayerMoveState : PlayerState
 {
     private const float raycastDistance = 64f;
+    private const float maximumDistanceApart = 0.1f;
     private RaycastHit2D raycastHit;
+    private Transform raycastHitTransform = null;
     protected abstract Vector2 MoveDirection { get; }
+    protected abstract string AnimatorBoolName { get; }
     protected float InputDirection { get; set; } = 0;
 
     public PlayerMoveState(Entity entity) : base(entity)
@@ -18,44 +22,48 @@ public abstract class PlayerMoveState : PlayerState
     {
         base.Enter();
         InitializeInputDirection();
-        SetPlayerAnimationEnter();
+        SetPlayerAnimation(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        SetPlayerAnimation(false);
     }
 
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
         MovePlayer();
-        DetectClosestCore();
+        DrawRaycastByDirection();
     }
 
     public override void StateUpdate()
     {
         base.StateUpdate();
+        InitializeRaycastHitTransform();
     }
 
     public override void TransitionCheck()
     {
         base.TransitionCheck();
-        //Check if distance is good enough to the core
+        CheckNearestCoreDistance();
     }
 
-    private void DetectClosestCore()
+    private void CheckNearestCoreDistance()
+    {
+        if (raycastHitTransform == null) return;
+        if (Vector2.Distance(entity.MyTransform.position, raycastHitTransform.position) <= maximumDistanceApart)
+        {
+            entity.MyTransform.position = raycastHitTransform.position;
+        }
+    }
+
+    private void DrawRaycastByDirection()
     {
         raycastHit = Physics2D.Raycast(entity.MyTransform.position, MoveDirection, raycastDistance, entity.TargetLayer);
-        //Drawing the raycast; we can delete this once we know we are good
-        Debug.DrawLine(entity.MyTransform.position, new Vector2(entity.MyTransform.position.x + raycastDistance, entity.MyTransform.position.y));
-        Debug.DrawLine(entity.MyTransform.position, new Vector2(entity.MyTransform.position.x - raycastDistance, entity.MyTransform.position.y));
-        Debug.DrawLine(entity.MyTransform.position, new Vector2(entity.MyTransform.position.x, entity.MyTransform.position.y + raycastDistance));
-        Debug.DrawLine(entity.MyTransform.position, new Vector2(entity.MyTransform.position.x, entity.MyTransform.position.y - raycastDistance));
-        if (raycastHit)
-        {
-            Debug.Log("We hit a core!!!");
-        }
+        //Drawing the raycast for visualizing purposes
+        Debug.DrawRay(entity.MyTransform.position, MoveDirection);
     }
 
     private void MovePlayer()
@@ -63,7 +71,18 @@ public abstract class PlayerMoveState : PlayerState
         entity.rb.velocity = MoveDirection;
     }
 
-    protected abstract void SetPlayerAnimationEnter();
+    private void InitializeRaycastHitTransform()
+    {
+        if (raycastHit && raycastHitTransform == null)
+        {
+            raycastHitTransform = raycastHit.collider.GetComponent<Transform>();
+        }
+    }
+
+    private void SetPlayerAnimation(bool value)
+    {
+        entity.Animator.SetBool(AnimatorBoolName, value);
+    }
 
     protected abstract void InitializeInputDirection();
 }

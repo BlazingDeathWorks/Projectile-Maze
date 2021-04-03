@@ -8,12 +8,12 @@ public abstract class Entity : MonoBehaviour
     [SerializeField]
     protected float entitySpeed = 1f;
     [SerializeField]
-    protected LayerMask targetLayer;
+    private LayerMask targetLayer;
     public float EntitySpeed { get => entitySpeed; }
     public Animator Animator { get; private set; } = null;
     public Transform MyTransform { get; private set; } = null;
     public Rigidbody2D rb { get; private set; } = null;
-    public LayerMask TargetLayer { get; private set; }
+    public LayerMask TargetLayer { get => targetLayer;}
     public StateMachine StateMachine { get; protected set; } = null;
 
     protected virtual void Awake()
