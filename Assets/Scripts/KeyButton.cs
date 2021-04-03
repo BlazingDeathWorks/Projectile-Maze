@@ -11,33 +11,27 @@ public class KeyButton
     public KeyCode KeyCode {set => keyCode = value;}
     public delegate void KeyCodeEvent();
     public event KeyCodeEvent OnKeyPress = null;
-    [HideInInspector]
+    [field: NonSerialized]
     public KeyButton[] KeyButtonsDisabled { private get; set; } = null;
 
-    public bool IsPressed
+    public bool IsPressed()
     {
-        get
-        {
-            return Input.GetKeyDown(keyCode) || Input.GetKey(keyCode);
-        }
+        return Input.GetKeyDown(keyCode) || Input.GetKey(keyCode);
     }
 
-    private bool IsEnabled
+    private bool IsEnabled()
     {
-        get
+        if (KeyButtonsDisabled == null) return true;
+        foreach (KeyButton keyButton in KeyButtonsDisabled)
         {
-            if (KeyButtonsDisabled == null) return true;
-            foreach (KeyButton keyButton in KeyButtonsDisabled)
-            {
-                if (keyButton.IsPressed) return false;
-            }
-            return true;
+            if (keyButton.IsPressed()) return false;
         }
+        return true;
     }
 
     public void TriggerOnKeyPress()
     {
-        if (IsPressed && IsEnabled)
+        if (IsPressed() && IsEnabled())
         {
             OnKeyPress?.Invoke();
         }
