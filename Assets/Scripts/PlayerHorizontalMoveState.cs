@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerHorizontalMoveState : PlayerMoveState
 {
     protected override Vector2 MoveDirection { get => new Vector2(InputDirection * entity.EntitySpeed, 0); }
-    protected override string AnimatorBoolName { get => "PlayerHorizontal"; }
+    protected override string AnimatorBoolMoveStateName { get => "PlayerHorizontal"; }
+    protected override PlayerRecoverSizeState RecoverSizeState { get => new PlayerHorizontalRecoverSizeState(entity); }
 
     public PlayerHorizontalMoveState(Entity entity) : base(entity)
     {

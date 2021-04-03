@@ -5,6 +5,8 @@ using UnityEngine;
 //Control the player movement UI
 public sealed class PlayerIdleState : MovablePlayerState
 {
+    private const string idleStateBoolName = "PlayerIdle";
+
     public PlayerIdleState(Entity entity) : base(entity)
     {
 
@@ -13,13 +15,13 @@ public sealed class PlayerIdleState : MovablePlayerState
     public override void Enter()
     {
         base.Enter();
-        const string idleStateBool = "PlayerIdle";
-        entity.Animator.SetBool(idleStateBool, true);
+        SetPlayerAnimation(true);
     }
 
     public override void Exit()
     {
         base.Exit();
+        SetPlayerAnimation(false);
     }
 
     public override void StateUpdate()
@@ -30,5 +32,10 @@ public sealed class PlayerIdleState : MovablePlayerState
     public override void TransitionCheck()
     {
         base.TransitionCheck();
+    }
+
+    private void SetPlayerAnimation(bool value)
+    {
+        entity.Animator.SetBool(idleStateBoolName, value);
     }
 }

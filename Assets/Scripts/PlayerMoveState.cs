@@ -10,7 +10,8 @@ public abstract class PlayerMoveState : PlayerState
     private RaycastHit2D raycastHit;
     private Transform raycastHitTransform = null;
     protected abstract Vector2 MoveDirection { get; }
-    protected abstract string AnimatorBoolName { get; }
+    protected abstract string AnimatorBoolMoveStateName { get; }
+    protected abstract PlayerRecoverSizeState RecoverSizeState { get; }
     protected float InputDirection { get; set; } = 0;
 
     public PlayerMoveState(Entity entity) : base(entity)
@@ -55,7 +56,9 @@ public abstract class PlayerMoveState : PlayerState
         if (raycastHitTransform == null) return;
         if (Vector2.Distance(entity.MyTransform.position, raycastHitTransform.position) <= maximumDistanceApart)
         {
+            entity.rb.velocity = Vector2.zero;
             entity.MyTransform.position = raycastHitTransform.position;
+            ChangeToSizeRecoverState();
         }
     }
 
@@ -81,7 +84,12 @@ public abstract class PlayerMoveState : PlayerState
 
     private void SetPlayerAnimation(bool value)
     {
-        entity.Animator.SetBool(AnimatorBoolName, value);
+        entity.Animator.SetBool(AnimatorBoolMoveStateName, value);
+    }
+
+    private void ChangeToSizeRecoverState()
+    {
+        entity.StateMachine.ChangeState(RecoverSizeState);
     }
 
     protected abstract void InitializeInputDirection();

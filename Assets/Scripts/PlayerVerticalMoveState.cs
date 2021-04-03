@@ -5,7 +5,8 @@ using UnityEngine;
 public class PlayerVerticalMoveState : PlayerMoveState
 {
     protected override Vector2 MoveDirection { get => new Vector2(0, InputDirection * entity.EntitySpeed); }
-    protected override string AnimatorBoolName { get => "PlayerVertical"; }
+    protected override string AnimatorBoolMoveStateName { get => "PlayerVertical"; }
+    protected override PlayerRecoverSizeState RecoverSizeState { get => new PlayerVerticalRecoverSizeState(entity); }
 
     public PlayerVerticalMoveState(Entity entity) : base(entity)
     {
