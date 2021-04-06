@@ -5,24 +5,25 @@ using UnityEngine;
 
 public abstract class PlayerMoveState : PlayerState
 {
-    private const float raycastDistance = 64f;
-    private const float maximumDistanceApart = 0.1f;
+    private const float raycastDistance = 3f;
+    private const float maximumDistanceApart = 1f;
     private RaycastHit2D raycastHit;
-    private Transform raycastHitTransform = null;
+    private Transform coreHitTransform = null;
     protected abstract Vector2 MoveDirection { get; }
-    protected abstract Vector2 RaycastPointOffsetted { get; }
     protected abstract PlayerRecoverSizeState RecoverSizeState { get; }
     protected float InputDirection { get; set; } = 0;
+    private static Transform previousRaycastHitTransform = null;
+    private const string ignoredCoreLayerName = "Ignored Core";
+    const string coreLayerName = "Core";
 
     public PlayerMoveState(Entity entity) : base(entity)
     {
-
+        InitializeInputDirection();
     }
 
     public override void Enter()
     {
         base.Enter();
-        InitializeInputDirection();
     }
 
     public override void Exit()
@@ -51,20 +52,27 @@ public abstract class PlayerMoveState : PlayerState
 
     private void CheckNearestCoreDistance()
     {
-        if (raycastHitTransform == null) return;
-        if (Vector2.Distance(entity.MyTransform.position, raycastHitTransform.position) <= maximumDistanceApart)
+        if (coreHitTransform == null) return;
+        if (Vector2.Distance(entity.MyTransform.position, coreHitTransform.position) <= maximumDistanceApart)
         {
             entity.rb.velocity = Vector2.zero;
-            entity.MyTransform.position = raycastHitTransform.position;
+            entity.MyTransform.position = coreHitTransform.position;
+            if(previousRaycastHitTransform != null)
+            {
+                previousRaycastHitTransform.gameObject.layer = LayerMask.NameToLayer(coreLayerName);
+            }
+            coreHitTransform.gameObject.layer = LayerMask.NameToLayer(ignoredCoreLayerName);
+            previousRaycastHitTransform = coreHitTransform;
             ChangeToSizeRecoverState();
+            return;
         }
     }
 
     private void DrawRaycastByDirection()
     {
-        raycastHit = Physics2D.Raycast(RaycastPointOffsetted, MoveDirection, raycastDistance, entity.TargetLayer);
+        raycastHit = Physics2D.Raycast(entity.MyTransform.position, MoveDirection, raycastDistance, entity.TargetLayer);
         //Drawing the raycast for visualizing purposes
-        Debug.DrawRay(RaycastPointOffsetted, MoveDirection);
+        Debug.DrawRay(entity.MyTransform.position, MoveDirection, Color.green);
     }
 
     private void MovePlayer()
@@ -74,16 +82,17 @@ public abstract class PlayerMoveState : PlayerState
 
     private void InitializeRaycastHitTransform()
     {
-        if (raycastHit && raycastHitTransform == null)
+        if (raycastHit && coreHitTransform == null)
         {
-            Debug.Log("RaycastHitTransform has been initialized");
-            raycastHitTransform = raycastHit.collider.GetComponent<Transform>();
+            Debug.Log("RaycastHit: " + raycastHit.collider.transform.position);
+            coreHitTransform = raycastHit.collider.GetComponent<Transform>();
         }
     }
 
     private void ChangeToSizeRecoverState()
     {
         entity.StateMachine.ChangeState(RecoverSizeState);
+        Debug.Log("Changed State to RecoverState");
     }
 
     protected abstract void InitializeInputDirection();
