@@ -72,4 +72,3 @@ crashlytics-build.properties
 *.csproj
 *.log
 *.log
-Logs/AssetImportWorker0.log
