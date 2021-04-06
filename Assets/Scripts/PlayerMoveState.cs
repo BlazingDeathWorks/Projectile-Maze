@@ -77,6 +77,7 @@ public abstract class PlayerMoveState : PlayerState
 
     private void MovePlayer()
     {
+        if (entity.rb == null) return;
         entity.rb.velocity = MoveDirection;
     }
 
