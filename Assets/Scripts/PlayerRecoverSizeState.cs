@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class PlayerRecoverSizeState : MovablePlayerState
 {
-    protected const string AnimatorBoolName = "PlayerSizeRecover";
+    protected sealed override string AnimatorBoolName => "PlayerSizeRecover";
+    private float timeSinceStateActivated = 0f;
+    private float animatorStateTimeLength = 0f;
+    private AnimatorStateInfo animatorStateInfo;
 
     public PlayerRecoverSizeState(Entity entity) : base(entity)
     {
@@ -13,14 +16,15 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
 
     public override void Enter()
     {
+        const int animatorBaseLayer = 0;
         base.Enter();
-        SetPlayerAnimation(true);
+        animatorStateInfo = entity.Animator.GetCurrentAnimatorStateInfo(animatorBaseLayer);
+        animatorStateTimeLength = animatorStateInfo.length;
     }
 
     public override void Exit()
     {
         base.Exit();
-        SetPlayerAnimation(false);
     }
 
     public override void PhysicsUpdate()
@@ -31,15 +35,20 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
     public override void StateUpdate()
     {
         base.StateUpdate();
+        timeSinceStateActivated += Time.deltaTime;
     }
 
     public override void TransitionCheck()
     {
         base.TransitionCheck();
+        CheckTimeInState();
     }
 
-    private void SetPlayerAnimation(bool value)
+    private void CheckTimeInState()
     {
-        entity.Animator.SetBool(AnimatorBoolName, value);
+        if (timeSinceStateActivated >= animatorStateTimeLength)
+        {
+            entity.StateMachine.ChangeState(new PlayerIdleState(entity));
+        }
     }
 }

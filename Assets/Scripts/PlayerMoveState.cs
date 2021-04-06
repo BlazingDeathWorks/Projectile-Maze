@@ -10,7 +10,7 @@ public abstract class PlayerMoveState : PlayerState
     private RaycastHit2D raycastHit;
     private Transform raycastHitTransform = null;
     protected abstract Vector2 MoveDirection { get; }
-    protected abstract string AnimatorBoolMoveStateName { get; }
+    protected abstract Vector2 RaycastPointOffsetted { get; }
     protected abstract PlayerRecoverSizeState RecoverSizeState { get; }
     protected float InputDirection { get; set; } = 0;
 
@@ -23,13 +23,11 @@ public abstract class PlayerMoveState : PlayerState
     {
         base.Enter();
         InitializeInputDirection();
-        SetPlayerAnimation(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        SetPlayerAnimation(false);
     }
 
     public override void PhysicsUpdate()
@@ -64,9 +62,9 @@ public abstract class PlayerMoveState : PlayerState
 
     private void DrawRaycastByDirection()
     {
-        raycastHit = Physics2D.Raycast(entity.MyTransform.position, MoveDirection, raycastDistance, entity.TargetLayer);
+        raycastHit = Physics2D.Raycast(RaycastPointOffsetted, MoveDirection, raycastDistance, entity.TargetLayer);
         //Drawing the raycast for visualizing purposes
-        Debug.DrawRay(entity.MyTransform.position, MoveDirection);
+        Debug.DrawRay(RaycastPointOffsetted, MoveDirection);
     }
 
     private void MovePlayer()
@@ -78,13 +76,9 @@ public abstract class PlayerMoveState : PlayerState
     {
         if (raycastHit && raycastHitTransform == null)
         {
+            Debug.Log("RaycastHitTransform has been initialized");
             raycastHitTransform = raycastHit.collider.GetComponent<Transform>();
         }
-    }
-
-    private void SetPlayerAnimation(bool value)
-    {
-        entity.Animator.SetBool(AnimatorBoolMoveStateName, value);
     }
 
     private void ChangeToSizeRecoverState()

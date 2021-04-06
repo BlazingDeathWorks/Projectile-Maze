@@ -12,11 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d67a2eca07161f04aa237d91c3fa77f8, type: 3}
   m_Name: Level 1 Config
   m_EditorClassIdentifier: 
-  texture: {fileID: 2800000, guid: e22c1d6a329591643af2db44c8b966f7, type: 3}
+  texture: {fileID: 2800000, guid: 2231557f5576f1e47a767240608ab03c, type: 3}
   colorToObjects:
   - color: {r: 0, g: 1, b: 0.14901961, a: 1}
     gameObject: {fileID: 2775371286368448399, guid: f2d241137afc47e4593a5a2b1fd792e5, type: 3}
   coreData:
   - {fileID: 11400000, guid: 357c5bacc11c4c94e941a410a18f6e44, type: 2}
+  - {fileID: 11400000, guid: c54010b678d6a6d4dbc895c3aff0ab17, type: 2}
+  - {fileID: 11400000, guid: cfed9f8c1285a1147b59348ab85fd6fc, type: 2}
+  - {fileID: 11400000, guid: 85ef5bdce90dfc342ae1c7c5daf83fc7, type: 2}
+  - {fileID: 11400000, guid: f810f9fac19c60541a82370e98d82a81, type: 2}
+  - {fileID: 11400000, guid: ba044f8fb8fe48743b21c8e54256ff8b, type: 2}
+  - {fileID: 11400000, guid: 093d6bfa05b0d7e4bbe521754456d64b, type: 2}
+  - {fileID: 11400000, guid: a29870d5a07a68d4c943323d00827f43, type: 2}
+  - {fileID: 11400000, guid: 209d45317086ae544ad77ff7f3cdaacb, type: 2}
+  - {fileID: 11400000, guid: 2ca3ba56caacd4a4b82d3ed82bfb05a1, type: 2}
+  - {fileID: 11400000, guid: 914bc310c25e07148983b5e5ab051d49, type: 2}
+  - {fileID: 11400000, guid: 1c3fbe6f9f0dca044be0517e4299e8bd, type: 2}
   customGridData:
     origin: {x: 0, y: 0}

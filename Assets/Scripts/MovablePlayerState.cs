@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovablePlayerState : PlayerState
+public abstract class MovablePlayerState : PlayerState
 {
     public MovablePlayerState(Entity entity) : base(entity)
     {
