@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovablePlayerState : PlayerState
+public abstract class MovablePlayerState : PlayerState
 {
     public MovablePlayerState(Entity entity) : base(entity)
     {
@@ -63,9 +63,7 @@ public class MovablePlayerState : PlayerState
         {
             return;
         }
-        entity.Animator.SetBool("PlayerHorizontal", true);
-        entity.rb.velocity = new Vector2(Input.GetAxisRaw("Horizontal") * entity.EntitySpeed, 0);
-        //Change State to Horizontal
+        entity.StateMachine.ChangeState(new PlayerHorizontalMoveState(entity));
     }
 
     private void MoveVertically()
@@ -74,8 +72,6 @@ public class MovablePlayerState : PlayerState
         {
             return;
         }
-        entity.Animator.SetBool("PlayerVertical", true);
-        entity.rb.velocity = new Vector2(0, Input.GetAxisRaw("Vertical") * entity.EntitySpeed);
-        //Change State to Vertical
+        entity.StateMachine.ChangeState(new PlayerVerticalMoveState(entity));
     }
 }

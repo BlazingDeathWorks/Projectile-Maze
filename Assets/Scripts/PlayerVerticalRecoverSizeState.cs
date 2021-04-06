@@ -2,12 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//Control the player movement UI
-public sealed class PlayerIdleState : MovablePlayerState
+public class PlayerVerticalRecoverSizeState : PlayerRecoverSizeState
 {
-    protected override string AnimatorBoolName => "PlayerIdle";
-
-    public PlayerIdleState(Entity entity) : base(entity)
+    public PlayerVerticalRecoverSizeState(Entity entity) : base(entity)
     {
 
     }
@@ -20,6 +17,11 @@ public sealed class PlayerIdleState : MovablePlayerState
     public override void Exit()
     {
         base.Exit();
+    }
+
+    public override void PhysicsUpdate()
+    {
+        base.PhysicsUpdate();
     }
 
     public override void StateUpdate()
