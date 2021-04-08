@@ -12,7 +12,8 @@ public abstract class Entity : MonoBehaviour
     public float EntitySpeed { get => entitySpeed; }
     public Animator Animator { get; private set; } = null;
     public Transform MyTransform { get; private set; } = null;
-    public Rigidbody2D rb { get; private set; } = null;
+    public Rigidbody2D Rb { get; private set; } = null;
+    public Collider2D Collider { get; private set; } = null;
     public LayerMask TargetLayer { get => targetLayer;}
     public StateMachine StateMachine { get; protected set; } = null;
 
@@ -20,7 +21,8 @@ public abstract class Entity : MonoBehaviour
     {
         Animator = GetComponent<Animator>();
         MyTransform = transform;
-        rb = GetComponent<Rigidbody2D>();
+        Rb = GetComponent<Rigidbody2D>();
+        Collider = GetComponent<Collider2D>();
     }
 
     protected virtual void Update()
@@ -32,5 +34,10 @@ public abstract class Entity : MonoBehaviour
     protected virtual void FixedUpdate()
     {
         StateMachine.currentState.PhysicsUpdate();
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        StateMachine.currentState.CollisionEnter(collision);
     }
 }

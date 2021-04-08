@@ -14,9 +14,18 @@ public abstract class BaseCore : MonoBehaviour
 
     public abstract void ConstructCore(CoreData coreData);
 
-    protected abstract void OnTriggerEnter2D(Collider2D collision);
+    protected virtual void OnTriggerEnter2D(Collider2D collision)
+    {
 
-    protected abstract void OnTriggerStay2D(Collider2D collision);
+    }
 
-    protected abstract void OnTriggerExit2D(Collider2D collision);
+    protected virtual void OnTriggerStay2D(Collider2D collision)
+    {
+        CoreData.DoOnTriggerStay(collision);
+    }
+
+    protected virtual void OnTriggerExit2D(Collider2D collision)
+    {
+
+    }
 }

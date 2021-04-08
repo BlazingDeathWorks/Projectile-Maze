@@ -65,7 +65,6 @@ public sealed class Core : BaseCore
     {
         rb.WakeUp();
         EnableGenerators();
-        CoreData.DoOnTriggerStay(collision);
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)

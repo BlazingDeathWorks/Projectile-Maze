@@ -11,7 +11,7 @@ public abstract class PlayerState : State
         
     }
 
-    private void SetPlayerAnimation(bool value)
+    protected void SetPlayerAnimation(bool value)
     {
         entity.Animator.SetBool(AnimatorBoolName, value);
     }

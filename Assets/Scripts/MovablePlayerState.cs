@@ -59,7 +59,8 @@ public abstract class MovablePlayerState : PlayerState
 
     private void MoveHorizontally()
     {
-        if (entity.rb == null)
+        Debug.Log("Move Horizontal");
+        if (entity.Rb == null)
         {
             return;
         }
@@ -68,7 +69,8 @@ public abstract class MovablePlayerState : PlayerState
 
     private void MoveVertically()
     {
-        if (entity.rb == null)
+        Debug.Log("Move Vertical");
+        if (entity.Rb == null)
         {
             return;
         }
