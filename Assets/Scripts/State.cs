@@ -36,4 +36,9 @@ public class State
     {
         
     }
+
+    public virtual void CollisionEnter(Collider2D collision)
+    {
+
+    }
 }

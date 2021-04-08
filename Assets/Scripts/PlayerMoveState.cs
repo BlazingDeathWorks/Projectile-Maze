@@ -5,96 +5,60 @@ using UnityEngine;
 
 public abstract class PlayerMoveState : PlayerState
 {
-    private const float raycastDistance = 3f;
-    private const float maximumDistanceApart = 1f;
-    private RaycastHit2D raycastHit;
     private Transform coreHitTransform = null;
+    protected float InputDirection { get; set; } = 0;
     protected abstract Vector2 MoveDirection { get; }
     protected abstract PlayerRecoverSizeState RecoverSizeState { get; }
-    protected float InputDirection { get; set; } = 0;
-    private static Transform previousRaycastHitTransform = null;
-    private const string ignoredCoreLayerName = "Ignored Core";
-    const string coreLayerName = "Core";
 
     public PlayerMoveState(Entity entity) : base(entity)
     {
         InitializeInputDirection();
     }
 
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-    }
-
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
         MovePlayer();
-        DrawRaycastByDirection();
     }
 
-    public override void StateUpdate()
+    private void StayAtCore()
     {
-        base.StateUpdate();
-        InitializeRaycastHitTransform();
-    }
-
-    public override void TransitionCheck()
-    {
-        base.TransitionCheck();
-        CheckNearestCoreDistance();
-    }
-
-    private void CheckNearestCoreDistance()
-    {
+        Debug.Log("Stay at Core");
         if (coreHitTransform == null) return;
-        if (Vector2.Distance(entity.MyTransform.position, coreHitTransform.position) <= maximumDistanceApart)
+
+        if(entity.Rb != null) entity.Rb.velocity = Vector2.zero;
+        entity.MyTransform.position = coreHitTransform.position;
+        ChangeToSizeRecoverState();
+        return;
+    }
+
+    public override void CollisionEnter(Collider2D collsion)
+    {
+        base.CollisionEnter(collsion);
+        if (collsion.GetComponent<BaseCore>() != null)
         {
-            entity.rb.velocity = Vector2.zero;
-            entity.MyTransform.position = coreHitTransform.position;
-            if(previousRaycastHitTransform != null)
-            {
-                previousRaycastHitTransform.gameObject.layer = LayerMask.NameToLayer(coreLayerName);
-            }
-            coreHitTransform.gameObject.layer = LayerMask.NameToLayer(ignoredCoreLayerName);
-            previousRaycastHitTransform = coreHitTransform;
-            ChangeToSizeRecoverState();
-            return;
+            coreHitTransform = collsion.gameObject.GetComponent<Transform>();
+            StayAtCore();
         }
     }
 
-    private void DrawRaycastByDirection()
-    {
-        raycastHit = Physics2D.Raycast(entity.MyTransform.position, MoveDirection, raycastDistance, entity.TargetLayer);
-        //Drawing the raycast for visualizing purposes
-        Debug.DrawRay(entity.MyTransform.position, MoveDirection, Color.green);
-    }
-
+    #region MovePlayer
     private void MovePlayer()
     {
-        if (entity.rb == null) return;
-        entity.rb.velocity = MoveDirection;
+        if (entity.Rb == null) return;
+        entity.Rb.velocity = MoveDirection;
     }
+    #endregion
 
-    private void InitializeRaycastHitTransform()
-    {
-        if (raycastHit && coreHitTransform == null)
-        {
-            Debug.Log("RaycastHit: " + raycastHit.collider.transform.position);
-            coreHitTransform = raycastHit.collider.GetComponent<Transform>();
-        }
-    }
-
+    #region ChangeToSizeRecoverState
     private void ChangeToSizeRecoverState()
     {
-        entity.StateMachine.ChangeState(RecoverSizeState);
         Debug.Log("Changed State to RecoverState");
+        entity.StateMachine.ChangeState(RecoverSizeState);
     }
+    #endregion
 
+    #region InitializeInputDirection Abstract Method
     protected abstract void InitializeInputDirection();
+    #endregion
 }

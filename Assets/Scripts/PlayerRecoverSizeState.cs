@@ -17,9 +17,9 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
     public override void Enter()
     {
         const int animatorBaseLayer = 0;
-        base.Enter();
         animatorStateInfo = entity.Animator.GetCurrentAnimatorStateInfo(animatorBaseLayer);
         animatorStateTimeLength = animatorStateInfo.length;
+        base.Enter();
     }
 
     public override void Exit()
