@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IDamagable
 {
+    int MaxHealth { get; }
     bool Invincible { get; set; }
     void TakeDamage(int damage);
 }

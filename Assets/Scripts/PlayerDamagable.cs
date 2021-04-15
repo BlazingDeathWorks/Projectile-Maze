@@ -6,8 +6,8 @@ public class PlayerDamagable : MonoBehaviour, IDamagable
 {
     [SerializeField]
     private GameObject deathParticle = null;
-    private static int maxHealth = 10;
-    private int health = maxHealth;
+    public int MaxHealth => 10;
+    private int health;
     private SpriteRenderer sr = null;
     private Rigidbody2D rb = null;
     public bool Invincible { get; set; } = false;
@@ -18,11 +18,16 @@ public class PlayerDamagable : MonoBehaviour, IDamagable
         rb = GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        health = MaxHealth;
+    }
+
     public void TakeDamage(int damage)
     {
         if (Invincible) return;
         health -= damage;
-        Mathf.Clamp(health, 0, maxHealth);
+        Mathf.Clamp(health, 0, MaxHealth);
         CheckHealthZero();
     }
     
