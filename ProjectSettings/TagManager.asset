@@ -16,8 +16,8 @@ TagManager:
   - Projectile Generator
   - Core
   - Ignored Core
-  - 
-  - 
+  - Room
+  - Boundary
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: Generator
     uniqueID: 172454109
+    locked: 0
+  - name: Canvas
+    uniqueID: 904836547
     locked: 0
