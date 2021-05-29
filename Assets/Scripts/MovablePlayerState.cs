@@ -1,24 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class MovablePlayerState : PlayerState
 {
     public MovablePlayerState(Entity entity) : base(entity)
     {
 
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-        AddInputManagerEvents();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
-        SubtractInputManagerEvents();
     }
 
     public override void StateUpdate()
@@ -31,7 +20,7 @@ public abstract class MovablePlayerState : PlayerState
         base.TransitionCheck();
     }
 
-    private void AddInputManagerEvents()
+    protected void AddInputManagerEvents()
     {
         if (InputManager.instance == null)
         {
@@ -42,9 +31,11 @@ public abstract class MovablePlayerState : PlayerState
         InputManager.instance.down.OnKeyPress += MoveVertically;
         InputManager.instance.left.OnKeyPress += MoveHorizontally;
         InputManager.instance.right.OnKeyPress += MoveHorizontally;
+        //Debugging
+        //Debug.Log("Added: " + GetType().Name);
     }
 
-    private void SubtractInputManagerEvents()
+    protected void SubtractInputManagerEvents()
     {
         if (InputManager.instance == null)
         {
@@ -55,11 +46,12 @@ public abstract class MovablePlayerState : PlayerState
         InputManager.instance.down.OnKeyPress -= MoveVertically;
         InputManager.instance.left.OnKeyPress -= MoveHorizontally;
         InputManager.instance.right.OnKeyPress -= MoveHorizontally;
+        //Debugging
+        //Debug.Log("Removed: " + GetType().Name);
     }
 
     private void MoveHorizontally()
     {
-        Debug.Log("Move Horizontal");
         if (entity.Rb == null)
         {
             return;
@@ -69,7 +61,6 @@ public abstract class MovablePlayerState : PlayerState
 
     private void MoveVertically()
     {
-        Debug.Log("Move Vertical");
         if (entity.Rb == null)
         {
             return;

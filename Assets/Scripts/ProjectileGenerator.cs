@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ProjectileGenerator : ProjectileGeneratorBase
+public sealed class ProjectileGenerator : ProjectileGeneratorBase
 {
     public override void ManualAwake()
     {
@@ -16,6 +16,7 @@ public class ProjectileGenerator : ProjectileGeneratorBase
 
     public override void EnableProjectile()
     {
+        //Checks if Instantiated Projectile
         if (!InstantiatedProjectile) return;
         InstantiatedProjectile.gameObject.SetActive(true);
         InstantiatedProjectile.MoveProjectile(ProjectileGeneratorData.Direction);
@@ -25,5 +26,11 @@ public class ProjectileGenerator : ProjectileGeneratorBase
     {
         if (!InstantiatedProjectile) return;
         InstantiatedProjectile.transform.position = transform.position;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        IDamagable damagable = null;
+        Damager.DealDamage(collision, out damagable, () => damagable.TakeDamage(damagable.MaxHealth));
     }
 }

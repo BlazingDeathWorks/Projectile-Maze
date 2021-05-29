@@ -59,12 +59,14 @@ public sealed class Core : BaseCore
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
         SetColliderToFullSize();
+        base.OnTriggerEnter2D(collision);
     }
 
     protected override void OnTriggerStay2D(Collider2D collision)
     {
         rb.WakeUp();
         EnableGenerators();
+        base.OnTriggerStay2D(collision);
     }
 
     protected override void OnTriggerExit2D(Collider2D collision)

@@ -6,14 +6,14 @@ public class PlayerStateMachine : StateMachine
 {
     public PlayerStateMachine(PlayerState defaultState)
     {
-        currentState = defaultState;
-        currentState.Enter();
+        CurrentState = defaultState;
+        CurrentState.Enter();
     }
 
     public override void ChangeState(State newState)
     {
-        currentState.Exit();
-        currentState = newState;
-        currentState.Enter();
+        CurrentState.Exit();
+        CurrentState = newState;
+        CurrentState.Enter();
     }
 }

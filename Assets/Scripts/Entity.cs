@@ -9,6 +9,7 @@ public abstract class Entity : MonoBehaviour
     protected float entitySpeed = 1f;
     [SerializeField]
     private LayerMask targetLayer;
+    public float TimeBeforeNextDash { get; set; } = 0f;
     public float EntitySpeed { get => entitySpeed; }
     public Animator Animator { get; private set; } = null;
     public Transform MyTransform { get; private set; } = null;
@@ -27,17 +28,17 @@ public abstract class Entity : MonoBehaviour
 
     protected virtual void Update()
     {
-        StateMachine.currentState.StateUpdate();
-        StateMachine.currentState.TransitionCheck();
+        StateMachine.CurrentState.StateUpdate();
+        StateMachine.CurrentState.TransitionCheck();
     }
 
     protected virtual void FixedUpdate()
     {
-        StateMachine.currentState.PhysicsUpdate();
+        StateMachine.CurrentState.PhysicsUpdate();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        StateMachine.currentState.CollisionEnter(collision);
+        StateMachine.CurrentState.CollisionEnter(collision);
     }
 }

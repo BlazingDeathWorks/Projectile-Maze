@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class StateMachine
 {
-    public State currentState { get; protected set; } = null;
+    public State CurrentState { get; protected set; } = null;
 
     public abstract void ChangeState(State newState);
 }

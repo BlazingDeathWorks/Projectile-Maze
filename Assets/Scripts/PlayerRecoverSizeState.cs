@@ -8,10 +8,11 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
     private float timeSinceStateActivated = 0f;
     private float animatorStateTimeLength = 0f;
     private AnimatorStateInfo animatorStateInfo;
+    private bool dashEnabled = false;
 
     public PlayerRecoverSizeState(Entity entity) : base(entity)
     {
-
+        
     }
 
     public override void Enter()
@@ -25,6 +26,8 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
     public override void Exit()
     {
         base.Exit();
+        if (!dashEnabled) return;
+        SubtractInputManagerEvents();
     }
 
     public override void PhysicsUpdate()
@@ -35,7 +38,19 @@ public abstract class PlayerRecoverSizeState : MovablePlayerState
     public override void StateUpdate()
     {
         base.StateUpdate();
+
         timeSinceStateActivated += Time.deltaTime;
+
+        CheckDash();
+    }
+
+    private void CheckDash()
+    {
+        if (timeSinceStateActivated >= entity.TimeBeforeNextDash && dashEnabled == false)
+        {
+            AddInputManagerEvents();
+            dashEnabled = true;
+        }
     }
 
     public override void TransitionCheck()

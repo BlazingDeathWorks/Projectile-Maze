@@ -10,22 +10,24 @@ public sealed class PlayerIdleState : MovablePlayerState
     private RaycastHit2D raycastHit;
     private Vector2[] cardinalDirections = new Vector2[4];
 
+    public override void Enter()
+    {
+        base.Enter();
+        AddInputManagerEvents();
+    }
+
+    public override void Exit()
+    {
+        base.Exit();
+        SubtractInputManagerEvents();
+    }
+
     public PlayerIdleState(Entity entity) : base(entity)
     {
         cardinalDirections[0] = new Vector2(0, raycastDistance);
         cardinalDirections[1] = new Vector2(0, -raycastDistance);
         cardinalDirections[2] = new Vector2(raycastDistance, 0);
         cardinalDirections[3] = new Vector2(-raycastDistance, 0);
-    }
-
-    public override void Enter()
-    {
-        base.Enter();
-    }
-
-    public override void Exit()
-    {
-        base.Exit();
     }
 
     public override void PhysicsUpdate()
@@ -58,7 +60,6 @@ public sealed class PlayerIdleState : MovablePlayerState
     {
         if (raycastHit)
         {
-            Debug.Log("RaycastHit: " + raycastHit.collider.transform.position);
             return;
         }
     }

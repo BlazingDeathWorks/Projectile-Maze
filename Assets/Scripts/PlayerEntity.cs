@@ -12,13 +12,13 @@ public sealed class PlayerEntity : Entity
 
     protected override void Update()
     {
-        if (StateMachine.currentState == null) return;
+        if (StateMachine.CurrentState == null) return;
         base.Update();
     }
 
     protected override void FixedUpdate()
     {
-        if (StateMachine.currentState == null) return;
+        if (StateMachine.CurrentState == null) return;
         base.FixedUpdate();
     }
 }

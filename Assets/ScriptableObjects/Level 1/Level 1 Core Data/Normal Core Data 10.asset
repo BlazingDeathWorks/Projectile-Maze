@@ -18,3 +18,4 @@ MonoBehaviour:
   projectileDamage: 2
   projectileScaleLength: 0.85
   generatorPos: {x: 9, y: 6}
+  TimeBeforeNextDash: 0

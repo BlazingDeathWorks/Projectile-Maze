@@ -23,7 +23,6 @@ public abstract class PlayerMoveState : PlayerState
 
     private void StayAtCore()
     {
-        Debug.Log("Stay at Core");
         if (coreHitTransform == null) return;
 
         if(entity.Rb != null) entity.Rb.velocity = Vector2.zero;
@@ -53,7 +52,6 @@ public abstract class PlayerMoveState : PlayerState
     #region ChangeToSizeRecoverState
     private void ChangeToSizeRecoverState()
     {
-        Debug.Log("Changed State to RecoverState");
         entity.StateMachine.ChangeState(RecoverSizeState);
     }
     #endregion

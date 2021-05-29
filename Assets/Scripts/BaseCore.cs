@@ -16,7 +16,7 @@ public abstract class BaseCore : MonoBehaviour
 
     protected virtual void OnTriggerEnter2D(Collider2D collision)
     {
-
+        CoreData.DoOnTriggerEnter(collision);
     }
 
     protected virtual void OnTriggerStay2D(Collider2D collision)

@@ -4,21 +4,30 @@ using UnityEngine;
 
 public abstract class CoreData : ScriptableObject
 {
+    #region Private Fields and Properties
     [SerializeField]
     private ProjectileGeneratorBase generator = null;
     [SerializeField]
     private ProjectileBase projectileObject = null;
+
     [SerializeField]
     float projectileSpeed = 1;
     [SerializeField]
     int projectileDamage = 1;
     [SerializeField] [Range(0.25f, 0.85f)]
     private float projectileScaleLength = 0.85f;
+
     [SerializeField] [Tooltip("This is the position of the generator in quadrant one if the core is the origin. This is used to make uniform spacing in the generators")]
     private Vector2Int generatorPos;
     Vector2Int[] generatorPositions = new Vector2Int[CoreTotalGenerators.TotalGenerators];
     float projectileScaleWidth = 0.25f;
 
+    [SerializeField]
+    [Tooltip("Values only relevant from 0 to 0.16")]
+    protected float TimeBeforeNextDash = 0.1f;
+    #endregion
+
+    #region Public Fields and Properties
     public ProjectileGeneratorBase Generator { get => generator; }
     public ProjectileBase ProjectileObject { get => projectileObject; }
     public float ProjectileSpeed { get => projectileSpeed; }
@@ -27,6 +36,7 @@ public abstract class CoreData : ScriptableObject
     public float ProjectileScaleLength { get => projectileScaleLength; }
     public Vector2Int[] GeneratorPositions { get => generatorPositions; }
     public DirectionBase[] QuadrantDirections { get; private set; } = new DirectionBase[CoreTotalGenerators.TotalGenerators];
+    #endregion
 
     public void SetQuadrantDirections()
     {
@@ -36,6 +46,8 @@ public abstract class CoreData : ScriptableObject
         QuadrantDirections[3] = new LeftDirection(this, ProjectileSpeed);
     }
 
+    #region SetGeneratorPositions
+
     private void OnValidate()
     {
         SetGeneratorPositions0();
@@ -44,7 +56,6 @@ public abstract class CoreData : ScriptableObject
         SetGeneratorPositions3();
     }
 
-    #region SetGeneratorPositions
     private void SetGeneratorPositions0()
     {
         generatorPositions[0].x = generatorPos.x;
@@ -70,8 +81,14 @@ public abstract class CoreData : ScriptableObject
     }
     #endregion
 
+    public virtual void DoOnTriggerEnter(Collider2D collision)
+    {
+        Entity playerEntity = null;
+        Damager.DealDamage(collision, out playerEntity, () => playerEntity.TimeBeforeNextDash = TimeBeforeNextDash);
+    }
+
     public virtual void DoOnTriggerStay(Collider2D collision)
     {
-
+        //Healing ability in the future
     }
 }

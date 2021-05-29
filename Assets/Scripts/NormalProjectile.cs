@@ -15,10 +15,7 @@ public sealed class NormalProjectile : ProjectileBase
     //Check for IDamagable Object to make them take damage.
     protected override void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.TryGetComponent(out damagableCollisionObject))
-        {
-            damagableCollisionObject.TakeDamage(ProjectileDataBase.ProjectileDamage);
-        }
+        Damager.DealDamage(collision, out damagableCollisionObject, () => damagableCollisionObject.TakeDamage(ProjectileDataBase.ProjectileDamage));
 
         if (collision.TryGetComponent(out generatorCollisionObject))
         {
